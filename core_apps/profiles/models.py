@@ -63,8 +63,8 @@ class Profile(TimeStampedUUIDModel):
         self.follows.remove(profile)
     
     def check_following(self, profile):
-        return self.follows.filter(pkid=profile.pkid).exist()
+        return self.follows.filter(pkid=profile.pkid).exists()
     
     def check_is_followed_by(self, profile):
-        return self.followed_by.filter(pkid=profile.pkid).exist()
+        return self.followed_by.filter(pkid=profile.pkid).exists()
         

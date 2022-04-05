@@ -28,7 +28,7 @@ def _handle_not_found_error(exc, context, response):
     if view and hasattr(view, "queryset") and view.queryset is not None:
         status_code = response.status_code
         error_key = view.queryset.model._meta.verbose_name
-        response.data = {"status_code": status_code, "errors": {erorr_key:response.data["detail"]}}
+        response.data = {"status_code": status_code, "errors": {error_key:response.data["detail"]}}
     else:
         response = _handle_generic_error(exc, context, response)
 
