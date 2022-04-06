@@ -7,7 +7,8 @@ from core_apps.articles.models import Article
 from .exceptions import AlreadyRated, CantRateYourArticle
 from .models import Rating
 
-@api_view(['POST'])
+
+@api_view(["POST"])
 @permission_classes([permissions.IsAuthenticated])
 def create_article_rating_view(request, article_id):
     author = request.user
@@ -16,7 +17,7 @@ def create_article_rating_view(request, article_id):
 
     if article.author == author:
         raise CantRateYourArticle
-    
+
     already_exists = article.article_ratings.filter(rated_by__pkid=author.pkid).exists()
     if already_exists:
         raise AlreadyRated
@@ -30,4 +31,6 @@ def create_article_rating_view(request, article_id):
             value=data["value"],
             review=data["review"],
         )
-        return Response({"success": "Rating has been added"}, status=status.HTTP_201_CREATED)
+        return Response(
+            {"success": "Rating has been added"}, status=status.HTTP_201_CREATED
+        )

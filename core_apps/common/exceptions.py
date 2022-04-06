@@ -1,5 +1,6 @@
 from rest_framework.views import exception_handler
 
+
 def common_exception_handler(exc, context):
 
     response = exception_handler(exc, context)
@@ -22,13 +23,17 @@ def _handle_generic_error(exc, context, response):
 
     return response
 
+
 def _handle_not_found_error(exc, context, response):
     view = context.get("view", None)
 
     if view and hasattr(view, "queryset") and view.queryset is not None:
         status_code = response.status_code
         error_key = view.queryset.model._meta.verbose_name
-        response.data = {"status_code": status_code, "errors": {error_key:response.data["detail"]}}
+        response.data = {
+            "status_code": status_code,
+            "errors": {error_key: response.data["detail"]},
+        }
     else:
         response = _handle_generic_error(exc, context, response)
 

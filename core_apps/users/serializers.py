@@ -6,12 +6,13 @@ from rest_framework import serializers
 
 User = get_user_model()
 
+
 class UserSerializer(serializers.ModelSerializer):
-    gender = serializers.CharField(source='profile.gender')
-    phone_number = PhoneNumberField(source='profile.phone_number')
-    profile_photo = serializers.ReadOnlyField(source='profile.profile_photo')
-    country = CountryField(source='profile.country')
-    city = serializers.CharField(source='profile.city')
+    gender = serializers.CharField(source="profile.gender")
+    phone_number = PhoneNumberField(source="profile.phone_number")
+    profile_photo = serializers.ReadOnlyField(source="profile.profile_photo")
+    country = CountryField(source="profile.country")
+    city = serializers.CharField(source="profile.city")
     first_name = serializers.SerializerMethodField()
     last_name = serializers.SerializerMethodField()
     full_name = serializers.SerializerMethodField()
@@ -31,13 +32,13 @@ class UserSerializer(serializers.ModelSerializer):
             "country",
             "city",
         ]
-    
+
     def get_first_name(self, obj):
         return obj.first_name.title()
-    
+
     def get_last_name(self, obj):
         return obj.last_name.title()
-    
+
     def get_full_name(self, obj):
         first_name = obj.first_name.title()
         last_name = obj.last_name.title()
@@ -52,7 +53,6 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class CreateUserSerializer(UserCreateSerializer):
-    
     class Meta(UserCreateSerializer.Meta):
         model = User
         fields = [
@@ -63,6 +63,3 @@ class CreateUserSerializer(UserCreateSerializer):
             "last_name",
             "password",
         ]
-    
-        
-    

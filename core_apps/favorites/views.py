@@ -9,6 +9,7 @@ from .exceptions import AlreadyFavorited
 from .models import Favorite
 from .serializers import FavoriteSerializer
 
+
 class FavoriteAPIView(generics.CreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = FavoriteSerializer

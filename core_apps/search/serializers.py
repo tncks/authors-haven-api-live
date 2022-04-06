@@ -1,5 +1,7 @@
 from drf_haystack.serializers import HaystackSerializer
+
 from core_apps.search.search_indexes import ArticleIndex
+
 
 class ArticleSearchSerializer(HaystackSerializer):
     class Meta:

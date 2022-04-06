@@ -3,6 +3,7 @@ from haystack import indexes
 
 from core_apps.articles.models import Article
 
+
 class ArticleIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True)
     author = indexes.CharField(model_attr="author")
@@ -14,13 +15,13 @@ class ArticleIndex(indexes.SearchIndex, indexes.Indexable):
     @staticmethod
     def prepare_author(obj):
         return "" if not obj.author else obj.author.username
-    
+
     @staticmethod
     def prepare_autocomplete(obj):
-        return ' '.join((obj.author.username, obj.title, obj.descrition))
-    
+        return " ".join((obj.author.username, obj.title, obj.descrition))
+
     def get_model(self):
         return Article
-    
+
     def index_queryset(self, using=None):
         return self.get_model().objects.filter(created_at__lte=timezone.now())

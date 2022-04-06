@@ -8,19 +8,19 @@ from core_apps.common.models import TimeStampedUUIDModel
 
 User = get_user_model()
 
+
 class Profile(TimeStampedUUIDModel):
     class Gender(models.TextChoices):
         MALE = "male", _("male")
         FEMALE = "female", _("female")
         OTHER = "other", _("other")
-    
-    user = models.OneToOneField(User, related_name="profile",
-    on_delete=models.CASCADE)
-    phone_number = PhoneNumberField(verbose_name=_("phone number"), 
-    max_length=30, default="+821012345678")
+
+    user = models.OneToOneField(User, related_name="profile", on_delete=models.CASCADE)
+    phone_number = PhoneNumberField(
+        verbose_name=_("phone number"), max_length=30, default="+821012345678"
+    )
     about_me = models.TextField(
-        verbose_name=_("about me"),
-        default="say something about yourself"
+        verbose_name=_("about me"), default="say something about yourself"
     )
     gender = models.CharField(
         verbose_name=_("gender"),
@@ -32,14 +32,11 @@ class Profile(TimeStampedUUIDModel):
         verbose_name=_("country"), default="KR", blank=False, null=False
     )
     city = models.CharField(
-        verbose_name=_("city"),
-        max_length=180,
-        default="Seoul",
-        blank=False,
-        null=False
+        verbose_name=_("city"), max_length=180, default="Seoul", blank=False, null=False
     )
-    profile_photo = models.ImageField(verbose_name=_("profile photo"),
-    default="/profile_default.png")
+    profile_photo = models.ImageField(
+        verbose_name=_("profile photo"), default="/profile_default.png"
+    )
     twitter_handle = models.CharField(
         verbose_name=_("twitter_handle"), max_length=20, blank=True
     )
@@ -49,22 +46,21 @@ class Profile(TimeStampedUUIDModel):
 
     def __str__(self):
         return f"{self.user.username}'s profile"
-    
+
     def following_list(self):
         return self.follows.all()
-    
+
     def followers_list(self):
         return self.followed_by.all()
-    
+
     def follow(self, profile):
         self.follows.add(profile)
-    
+
     def unfollow(self, profile):
         self.follows.remove(profile)
-    
+
     def check_following(self, profile):
         return self.follows.filter(pkid=profile.pkid).exists()
-    
+
     def check_is_followed_by(self, profile):
         return self.followed_by.filter(pkid=profile.pkid).exists()
-        
