@@ -2,7 +2,7 @@
 
 
 
-git archive --format tar --output ./project.tar main
+git archive --format tar --output ./project.tar master
 
 echo "Uploading the project.....:-)...Be Patient!"
 rsync ./project.tar root@134.209.181.179:/tmp/project.tar
